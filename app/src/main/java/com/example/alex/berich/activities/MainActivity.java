@@ -1,21 +1,19 @@
 package com.example.alex.berich.activities;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
 
 import com.example.alex.berich.DayItem;
 import com.example.alex.berich.R;
 import com.example.alex.berich.adapters.DaysAdapter;
 
-import org.androidannotations.annotations.EActivity;
-
+import java.util.ArrayList;
 import java.util.List;
 
-@EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     public double totalMoneyCount;
     private RecyclerView mCrimeRecyclerView;
@@ -32,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         dayItem.monthAndYear = "November 2015";
         dayItem.spent = 100;
 
+        dayItemLis = new ArrayList<DayItem>();
 
         dayItemLis.add(dayItem);
         dayItemLis.add(dayItem);
