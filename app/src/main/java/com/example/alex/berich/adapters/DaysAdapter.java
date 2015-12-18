@@ -26,7 +26,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ItemHolder> {
     public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
         View view = layoutInflater
-                .inflate(android.R.layout.simple_list_item_1, parent, false);
+                .inflate(R.layout.days_adapter_item, parent, false);
         return new ItemHolder(view);
     }
 
