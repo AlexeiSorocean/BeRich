@@ -8,20 +8,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 
-import com.example.alex.berich.DayItem;
+
 import com.example.alex.berich.R;
-import com.example.alex.berich.adapters.DaysAdapter;
+
 import com.example.alex.berich.fragments.MonthFragment;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends FragmentActivity {
 
@@ -41,7 +36,7 @@ public class MainActivity extends FragmentActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-
+        mPager.setOnPageChangeListener(new CircularViewPagerHandler(mPager));
     }
 
     @Override
@@ -72,6 +67,59 @@ public class MainActivity extends FragmentActivity {
             return NUM_PAGES;
         }
     }
+
+
+
+    public class CircularViewPagerHandler implements ViewPager.OnPageChangeListener {
+        private ViewPager   mViewPager;
+        private int         mCurrentPosition;
+        private int         mScrollState;
+
+        public CircularViewPagerHandler(final ViewPager viewPager) {
+            mViewPager = viewPager;
+        }
+
+        @Override
+        public void onPageSelected(final int position) {
+            mCurrentPosition = position;
+        }
+
+        @Override
+        public void onPageScrollStateChanged(final int state) {
+            handleScrollState(state);
+            mScrollState = state;
+        }
+
+        private void handleScrollState(final int state) {
+            if (state == ViewPager.SCROLL_STATE_IDLE) {
+                setNextItemIfNeeded();
+            }
+        }
+
+        private void setNextItemIfNeeded() {
+            if (!isScrollStateSettling()) {
+                handleSetNextItem();
+            }
+        }
+
+        private boolean isScrollStateSettling() {
+            return mScrollState == ViewPager.SCROLL_STATE_SETTLING;
+        }
+
+        private void handleSetNextItem() {
+            final int lastPosition = mViewPager.getAdapter().getCount() - 1;
+            if(mCurrentPosition == 0) {
+                mViewPager.setCurrentItem(lastPosition, false);
+            } else if(mCurrentPosition == lastPosition) {
+                mViewPager.setCurrentItem(0, false);
+            }
+        }
+
+        @Override
+        public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
+        }
+    }
+
 
 
 }
