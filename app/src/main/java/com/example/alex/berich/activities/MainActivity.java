@@ -1,6 +1,6 @@
 package com.example.alex.berich.activities;
 
-import android.app.Activity;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -11,22 +11,33 @@ import android.support.v4.view.ViewPager;
 
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.TextView;
 
 
+import com.example.alex.berich.Month;
 import com.example.alex.berich.R;
 
 import com.example.alex.berich.fragments.MonthFragment;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
 
-    private static final int NUM_PAGES = 5;
+    private static final int NUM_PAGES = 3;
 
 
     private ViewPager mPager;
 
     private PagerAdapter mPagerAdapter;
+
+    private String selectedMonth;
+
+    private TextView currentMonth;
+    private TextView nextMonth;
+    private TextView prevMonth;
+
+    boolean onButtonClick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +47,25 @@ public class MainActivity extends FragmentActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-        mPager.setOnPageChangeListener(new CircularViewPagerHandler(mPager));
+        //mPager.setOnPageChangeListener(new CircularViewPagerHandler(mPager));
+
+        currentMonth = (TextView) findViewById(R.id.currentMonth);
+        nextMonth = (TextView) findViewById(R.id.nextMonth);
+        prevMonth = (TextView) findViewById(R.id.prevMonth);
+        currentMonth.setOnClickListener(this);
+        nextMonth.setOnClickListener(this);
+        prevMonth.setOnClickListener(this);
+
+        currentMonth.setText(Month.getInstance(this).getCurentMonth());
+        Month.getInstance(this).setNextMonth();
+        nextMonth.setText(Month.getInstance(this).getCurentMonth());
+        Month.getInstance(this).setPrevMonth();
+        Month.getInstance(this).setPrevMonth();
+        prevMonth.setText(Month.getInstance(this).getCurentMonth());
+        Month.getInstance(this).setNextMonth();
     }
+
+
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -52,6 +80,58 @@ public class MainActivity extends FragmentActivity {
         return true;
     }
 
+    @Override
+    public void onClick(View v) {
+        selectButton(v.getId());
+        handleButtonClick(v.getId());
+    }
+
+    public void selectButton(int id) {
+        switch (id) {
+            case R.id.nextMonth: {
+                nextMonth.setTextColor(Color.BLACK);
+                prevMonth.setTextColor(Color.GRAY);
+                currentMonth.setTextColor(Color.GRAY);
+            }
+            break;
+            case R.id.prevMonth: {
+                prevMonth.setTextColor(Color.BLACK);
+                nextMonth.setTextColor(Color.GRAY);
+                currentMonth.setTextColor(Color.GRAY);
+            }
+            break;
+            case R.id.currentMonth: {
+                currentMonth.setTextColor(Color.BLACK);
+                nextMonth.setTextColor(Color.GRAY);
+                prevMonth.setTextColor(Color.GRAY);
+            }
+            break;
+
+        }
+    }
+
+    public void handleButtonClick(int id) {
+
+        switch (id) {
+
+            case R.id.prevMonth: {
+                mPager.setCurrentItem(0);
+
+            }
+            break;
+            case R.id.currentMonth: {
+                mPager.setCurrentItem(1);
+            }
+            break;
+
+            case R.id.nextMonth: {
+                mPager.setCurrentItem(2);
+            }
+            break;
+        }
+
+    }
+
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -59,67 +139,16 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return new MonthFragment();
+            return  MonthFragment.getInstance(position);
         }
 
         @Override
         public int getCount() {
             return NUM_PAGES;
         }
+
+
+
     }
-
-
-
-    public class CircularViewPagerHandler implements ViewPager.OnPageChangeListener {
-        private ViewPager   mViewPager;
-        private int         mCurrentPosition;
-        private int         mScrollState;
-
-        public CircularViewPagerHandler(final ViewPager viewPager) {
-            mViewPager = viewPager;
-        }
-
-        @Override
-        public void onPageSelected(final int position) {
-            mCurrentPosition = position;
-        }
-
-        @Override
-        public void onPageScrollStateChanged(final int state) {
-            handleScrollState(state);
-            mScrollState = state;
-        }
-
-        private void handleScrollState(final int state) {
-            if (state == ViewPager.SCROLL_STATE_IDLE) {
-                setNextItemIfNeeded();
-            }
-        }
-
-        private void setNextItemIfNeeded() {
-            if (!isScrollStateSettling()) {
-                handleSetNextItem();
-            }
-        }
-
-        private boolean isScrollStateSettling() {
-            return mScrollState == ViewPager.SCROLL_STATE_SETTLING;
-        }
-
-        private void handleSetNextItem() {
-            final int lastPosition = mViewPager.getAdapter().getCount() - 1;
-            if(mCurrentPosition == 0) {
-                mViewPager.setCurrentItem(lastPosition, false);
-            } else if(mCurrentPosition == lastPosition) {
-                mViewPager.setCurrentItem(0, false);
-            }
-        }
-
-        @Override
-        public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
-        }
-    }
-
-
 
 }

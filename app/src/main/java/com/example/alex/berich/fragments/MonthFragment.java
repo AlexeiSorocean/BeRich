@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.example.alex.berich.DayItem;
 import com.example.alex.berich.R;
+import com.example.alex.berich.activities.MainActivity;
 import com.example.alex.berich.adapters.DaysAdapter;
 
 import java.util.ArrayList;
@@ -31,14 +32,42 @@ public class MonthFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.month_fragment_layout, container, false);
 
+
         return rootView;
+    }
+
+    static public MonthFragment getInstance(int position) {
+        MonthFragment frament = new MonthFragment();
+        Bundle args = new Bundle();
+        args.putInt("Position", position);
+        frament.setArguments(args);
+        return frament;
+    }
+    public int selectButtonFromFragment(int position) {
+        int buttonToChosee = 0;
+        switch (position) {
+            case 0:
+                buttonToChosee = R.id.prevMonth;
+                break;
+            case 1:
+                buttonToChosee = R.id.currentMonth;
+
+                break;
+            case 2:
+                buttonToChosee = R.id.nextMonth;
+                break;
+        };
+        return buttonToChosee;
     }
 
     @Override
     public void onActivityCreated(Bundle onSavedInstanseState) {
         super.onActivityCreated(onSavedInstanseState);
         DayItem dayItem = new DayItem();
-        dayItem.dayOfTheMonth = 23;
+
+        ((MainActivity)getActivity()).selectButton(selectButtonFromFragment(getArguments().getInt("Position")));
+
+        dayItem.dayOfTheMonth = getArguments().getInt("Position");
         dayItem.dayOfTheWeek = "Wednesday";
         dayItem.monthAndYear = "November 2015";
         dayItem.spent = 100;
@@ -64,6 +93,7 @@ public class MonthFragment extends Fragment {
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mCrimeRecyclerView.setAdapter(daysAdapter);
     }
+
 
 
 }
