@@ -44,7 +44,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="login"
+        android:text="Login"
         android:id="@+id/buttonLogin"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/textview"

@@ -32,10 +32,8 @@ public class MonthFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.month_fragment_layout, container, false);
 
-
         return rootView;
     }
-
     static public MonthFragment getInstance(int position) {
         MonthFragment frament = new MonthFragment();
         Bundle args = new Bundle();
@@ -65,7 +63,7 @@ public class MonthFragment extends Fragment {
         super.onActivityCreated(onSavedInstanseState);
         DayItem dayItem = new DayItem();
 
-        ((MainActivity)getActivity()).selectButton(selectButtonFromFragment(getArguments().getInt("Position")));
+        //((MainActivity)getActivity()).selectButton(selectButtonFromFragment(getArguments().getInt("Position")));
 
         dayItem.dayOfTheMonth = getArguments().getInt("Position");
         dayItem.dayOfTheWeek = "Wednesday";
@@ -73,7 +71,6 @@ public class MonthFragment extends Fragment {
         dayItem.spent = 100;
 
         dayItemLis = new ArrayList<DayItem>();
-
         dayItemLis.add(dayItem);
         dayItemLis.add(dayItem);
         dayItemLis.add(dayItem);
@@ -86,14 +83,21 @@ public class MonthFragment extends Fragment {
         dayItemLis.add(dayItem);
         dayItemLis.add(dayItem);
         dayItemLis.add(dayItem);
-
+        DayItem.Purchase purchase = new DayItem.Purchase();
+        purchase.title = "brinza";
+        purchase.category = "cumparaturi";
+        purchase.price = 100;
+        dayItem.purchasesList = new ArrayList<DayItem.Purchase> ();
+        dayItem.purchasesList.add(purchase);
+        dayItem.purchasesList.add(purchase);
+        dayItem.purchasesList.add(purchase);
+        dayItem.purchasesList.add(purchase);
+        dayItem.purchasesList.add(purchase);
+        dayItem.purchasesList.add(purchase);
         DaysAdapter daysAdapter = new DaysAdapter(dayItemLis, getActivity());
 
         mCrimeRecyclerView = (RecyclerView) getView().findViewById(R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mCrimeRecyclerView.setAdapter(daysAdapter);
     }
-
-
-
 }

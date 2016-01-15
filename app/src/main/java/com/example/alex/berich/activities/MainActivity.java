@@ -23,9 +23,7 @@ import com.example.alex.berich.fragments.MonthFragment;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
-
     private static final int NUM_PAGES = 3;
-
 
     private ViewPager mPager;
 
@@ -47,6 +45,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+        mPager.setCurrentItem(1, false);
         //mPager.setOnPageChangeListener(new CircularViewPagerHandler(mPager));
 
         currentMonth = (TextView) findViewById(R.id.currentMonth);
@@ -56,22 +55,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         nextMonth.setOnClickListener(this);
         prevMonth.setOnClickListener(this);
 
-        currentMonth.setText(Month.getInstance(this).getCurentMonth());
-        Month.getInstance(this).setNextMonth();
-        nextMonth.setText(Month.getInstance(this).getCurentMonth());
-        Month.getInstance(this).setPrevMonth();
-        Month.getInstance(this).setPrevMonth();
-        prevMonth.setText(Month.getInstance(this).getCurentMonth());
-        Month.getInstance(this).setNextMonth();
+        currentMonth.setText("01/2016");
+        prevMonth.setText("12/2015");
+        nextMonth.setText("02/2016");
+        selectButton(R.id.currentMonth);
+
     }
-
-
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return super.onPrepareOptionsMenu(menu);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -106,7 +100,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 prevMonth.setTextColor(Color.GRAY);
             }
             break;
-
         }
     }
 
@@ -116,20 +109,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             case R.id.prevMonth: {
                 mPager.setCurrentItem(0);
-
             }
             break;
             case R.id.currentMonth: {
                 mPager.setCurrentItem(1);
             }
             break;
-
             case R.id.nextMonth: {
                 mPager.setCurrentItem(2);
             }
             break;
         }
-
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
@@ -146,9 +136,5 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         public int getCount() {
             return NUM_PAGES;
         }
-
-
-
     }
-
 }

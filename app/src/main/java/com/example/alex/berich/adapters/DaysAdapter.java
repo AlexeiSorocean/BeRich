@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.alex.berich.DayItem;
 import com.example.alex.berich.R;
+import com.example.alex.berich.activities.MainActivity;
 
 import java.util.Collection;
 import java.util.List;
@@ -37,6 +39,26 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ItemHolder> {
         holder.dayOfTheWeek.setText(dayItem.dayOfTheWeek);
         holder.year.setText(dayItem.monthAndYear);
         holder.spent.setText(Float.toString(dayItem.spent));
+
+
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        for (int i = 0; i < dayItem.purchasesList.size(); i++) {
+            //LinearLayout purshaseLinearLayout = (LinearLayout) ((MainActivity) mContext).findViewById(R.id.purchaseItem);
+            LayoutInflater inflater =
+                    (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LinearLayout purshaseLinearLayout = (LinearLayout) inflater.inflate(R.layout.purchase_item, null);
+
+            TextView category = (TextView) purshaseLinearLayout.findViewById(R.id.category);
+            category.setText(dayItem.purchasesList.get(i).category);
+            TextView title = (TextView) purshaseLinearLayout.findViewById(R.id.title);
+            title.setText(dayItem.purchasesList.get(i).category);
+            TextView price = (TextView) purshaseLinearLayout.findViewById(R.id.price);
+            price.setText(Double.toString(dayItem.purchasesList.get(i).price));
+            holder.layoutContainer.addView(purshaseLinearLayout);
+
+        }
     }
 
     @Override
@@ -50,6 +72,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ItemHolder> {
         public TextView dayOfTheWeek;
         public TextView year;
         public TextView spent;
+        public LinearLayout layoutContainer;
 
         public ItemHolder(View view) {
             super(view);
@@ -57,7 +80,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ItemHolder> {
             dayOfTheWeek = (TextView) view.findViewById(R.id.dayOfTheWeek);
             year = (TextView) view.findViewById(R.id.dateMonthYear);
             spent = (TextView) view.findViewById(R.id.spent);
-
+            layoutContainer = (LinearLayout) view.findViewById(R.id.purchasesLayoutContainer);
 
         }
     }
@@ -66,10 +89,4 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ItemHolder> {
         this.daysItem = dayItemLis;
         this.mContext = context;
     }
-
-
-
-
-
-
 }
