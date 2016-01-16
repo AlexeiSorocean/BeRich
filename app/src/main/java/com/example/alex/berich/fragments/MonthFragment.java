@@ -1,13 +1,24 @@
 package com.example.alex.berich.fragments;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.example.alex.berich.DayItem;
 import com.example.alex.berich.R;
@@ -34,6 +45,7 @@ public class MonthFragment extends Fragment {
 
         return rootView;
     }
+
     static public MonthFragment getInstance(int position) {
         MonthFragment frament = new MonthFragment();
         Bundle args = new Bundle();
@@ -41,22 +53,7 @@ public class MonthFragment extends Fragment {
         frament.setArguments(args);
         return frament;
     }
-    public int selectButtonFromFragment(int position) {
-        int buttonToChosee = 0;
-        switch (position) {
-            case 0:
-                buttonToChosee = R.id.prevMonth;
-                break;
-            case 1:
-                buttonToChosee = R.id.currentMonth;
 
-                break;
-            case 2:
-                buttonToChosee = R.id.nextMonth;
-                break;
-        };
-        return buttonToChosee;
-    }
 
     @Override
     public void onActivityCreated(Bundle onSavedInstanseState) {
@@ -87,7 +84,7 @@ public class MonthFragment extends Fragment {
         purchase.title = "brinza";
         purchase.category = "cumparaturi";
         purchase.price = 100;
-        dayItem.purchasesList = new ArrayList<DayItem.Purchase> ();
+        dayItem.purchasesList = new ArrayList<DayItem.Purchase>();
         dayItem.purchasesList.add(purchase);
         dayItem.purchasesList.add(purchase);
         dayItem.purchasesList.add(purchase);
@@ -96,8 +93,19 @@ public class MonthFragment extends Fragment {
         dayItem.purchasesList.add(purchase);
         DaysAdapter daysAdapter = new DaysAdapter(dayItemLis, getActivity());
 
+
         mCrimeRecyclerView = (RecyclerView) getView().findViewById(R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mCrimeRecyclerView.setAdapter(daysAdapter);
+
+}
+    int dpToPixel(int dp)
+    {
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        float fpixels = metrics.density * dp;
+        int pixels = (int) (metrics.density * dp + 0.5f);
+        return pixels;
     }
 }
+
+

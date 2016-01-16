@@ -42,20 +42,25 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ItemHolder> {
 
 
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//        LinearLayout relativeLayout = (LinearLayout) getView().findViewById(R.id.layoutContainer);
+
+
         for (int i = 0; i < dayItem.purchasesList.size(); i++) {
-            //LinearLayout purshaseLinearLayout = (LinearLayout) ((MainActivity) mContext).findViewById(R.id.purchaseItem);
+
             LayoutInflater inflater =
-                    (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             LinearLayout purshaseLinearLayout = (LinearLayout) inflater.inflate(R.layout.purchase_item, null);
 
             TextView category = (TextView) purshaseLinearLayout.findViewById(R.id.category);
-            category.setText(dayItem.purchasesList.get(i).category);
+            category.setText(dayItem.purchasesList.get(0).category);
             TextView title = (TextView) purshaseLinearLayout.findViewById(R.id.title);
-            title.setText(dayItem.purchasesList.get(i).category);
+            title.setText(dayItem.purchasesList.get(0).category);
             TextView price = (TextView) purshaseLinearLayout.findViewById(R.id.price);
-            price.setText(Double.toString(dayItem.purchasesList.get(i).price));
+            price.setText(Double.toString(dayItem.purchasesList.get(0).price));
+
+
+
+
             holder.layoutContainer.addView(purshaseLinearLayout);
 
         }
