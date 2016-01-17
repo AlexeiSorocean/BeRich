@@ -45,21 +45,18 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ItemHolder> {
 //        LinearLayout relativeLayout = (LinearLayout) getView().findViewById(R.id.layoutContainer);
 
 
-        for (int i = 0; i < dayItem.purchasesList.size(); i++) {
+        for (int i = 0; i < 0; i++) {
 
             LayoutInflater inflater =
                     (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             LinearLayout purshaseLinearLayout = (LinearLayout) inflater.inflate(R.layout.purchase_item, null);
 
             TextView category = (TextView) purshaseLinearLayout.findViewById(R.id.category);
-            category.setText(dayItem.purchasesList.get(0).category);
+            category.setText(dayItem.purchasesList.get(i).category);
             TextView title = (TextView) purshaseLinearLayout.findViewById(R.id.title);
-            title.setText(dayItem.purchasesList.get(0).category);
+            title.setText(dayItem.purchasesList.get(i).category);
             TextView price = (TextView) purshaseLinearLayout.findViewById(R.id.price);
-            price.setText(Double.toString(dayItem.purchasesList.get(0).price));
-
-
-
+            price.setText(Double.toString(dayItem.purchasesList.get(i).price));
 
             holder.layoutContainer.addView(purshaseLinearLayout);
 

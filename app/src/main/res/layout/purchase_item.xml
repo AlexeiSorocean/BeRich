@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:id="@+id/purchaseItem"
     android:layout_height="60dp">
-
-    <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:id="@+id/layoutContaiener"
-    android:layout_height="60dp">
-
 
     <ImageView
         android:layout_width="60dp"
@@ -62,13 +55,4 @@
         android:paddingRight="@dimen/days_adapter_item_padding"
         />
 
-       </LinearLayout>
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="12px"
-        android:layout_gravity="center"
-        android:background="#000000"
-        />
 </LinearLayout>
