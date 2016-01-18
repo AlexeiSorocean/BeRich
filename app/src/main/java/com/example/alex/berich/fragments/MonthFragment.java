@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -37,18 +38,26 @@ import java.util.List;
  */
 public class MonthFragment extends Fragment {
 
+    private static final String TAG = "MonthFragment";
+
+    private static final String MONTH_TITLE = "MONTH_TITLE";
     private static final String INFLOW = "INFLOW";
     private static final String OUTFLOW = "OUTFLOW";
-    private static final String TOTAL = "TOTAL";
-    private static final String DAY_OF_THE_MONTH = "DAY_OF_THE_MONTH";
-    private static final String MONTH_TITLE = "MONTH_TITLE";
-    private static final String CATEGORY = "CATEGORY";
+    private static final String MONHT_TOTAL = "TOTAL";
+
+
+    private static final String PURCHASE_CATEGORY = "PURCHASE_CATEGORY";
     private static final String PURCHASE_TITLE = "PURCHASE_TITLE";
     private static final String PURCHASE_PRICE = "PURCHASE_PRICE";
-    private static final String DAY_TOTAL = "DAY_TOTAL";
-    private static final String DAY_NAME = "DAY_NAME";
+    private static final String PURCHASE_COUNT = "PURCHASE_COUNT";
+    private static final String PURCHASE = "PURCHASE";
+
+    private static final String DAYS = "DAYS";
     private static final String DAYS_COUNT = "DAYS_COUNT";
+
+    private static final String DAY_TOTAL = "DAY_TOTAL";
     private static final String DAY_TITLE = "DAY_TITLE";
+
 
     List<DayItem> dayItemLis;
     public double totalMoneyCount;
@@ -115,9 +124,16 @@ public class MonthFragment extends Fragment {
 
         JSONObject month;
         JSONArray days;
-        JSONObject day;
+        JSONObject day1;
+        JSONObject day2;
+        JSONObject day3;
+
+
         JSONArray purchases;
-        JSONObject purchas;
+        JSONObject purchase1;
+        JSONObject purchase2;
+        JSONObject purchase3;
+        JSONObject purchase4;
 
 
         try {
@@ -125,11 +141,45 @@ public class MonthFragment extends Fragment {
             month.put(INFLOW, Integer.toString(500));
             month.put(OUTFLOW, Double.toString(1.810));
             month.put(DAYS_COUNT, Integer.toString(5));
-            days = new JSONArray();
-            day = new JSONObject();
-            day.put(DAY_TOTAL, -140);
-            month.put("days", days);
 
+
+            days = new JSONArray();
+            day1 = new JSONObject();
+            day1.put(DAY_TOTAL, -140);
+            day1.put(MONTH_TITLE, "November 2015");
+            day1.put(DAY_TITLE, "Wednesday");
+            day1.put(PURCHASE_COUNT, 2);
+
+            day2 = new JSONObject();
+            day2.put(DAY_TOTAL, -140);
+            day2.put(MONTH_TITLE, "November 2015");
+            day2.put(DAY_TITLE, "Friday");
+            day2.put(PURCHASE_COUNT, 2);
+
+
+            purchase1 = new JSONObject();
+            purchase1.put(PURCHASE_CATEGORY, "Pocupki");
+            purchase1.put(PURCHASE_TITLE, "Maliguta");
+            purchase1.put(PURCHASE_PRICE, 100);
+
+
+            purchase2 = new JSONObject();
+            purchase2.put(PURCHASE_CATEGORY, "Pocupki");
+            purchase2.put(PURCHASE_TITLE, "Platindi");
+            purchase2.put(PURCHASE_PRICE, 40);
+
+
+            purchases = new JSONArray();
+
+
+            purchases.put(purchase1);
+            purchases.put(purchase2);
+
+            days.put(day1);
+            days.put(day2);
+            day1.put("purchases", purchases);
+            month.put("days", days);
+            Log.d(TAG, month.toString());
 
 
         } catch (JSONException e) {

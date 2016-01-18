@@ -10,7 +10,6 @@ public class MonthsLab {
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
-
     private  MonthsLab(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new MonthBaseHelper(mContext).getWritableDatabase();
