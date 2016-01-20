@@ -3,24 +3,34 @@
     package="com.example.alex.berich">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".BeRichApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.NoTitleBar" >
+        android:theme="@android:style/Theme.NoTitleBar">
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="YYESkJacgOqhnzTqcCS0G3JbEPo6jGnlHsL1wDaH" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="Yx1ussY2sW3JnRR1OmR9NpBEzklTnAxIy1tL0jw1" />
 
-
-        <activity android:name=".activities.LoginActivity" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
+        <activity android:name=".activities.LoginActivity"></activity>
         <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.MainActivity"></activity>
+        <activity android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.SignUpActivity"
+            android:label="@string/title_activity_sign_up"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.alex.berich.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -19,9 +21,15 @@ import com.example.alex.berich.Month;
 import com.example.alex.berich.R;
 
 import com.example.alex.berich.fragments.MonthFragment;
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final int NUM_PAGES = 3;
 
@@ -41,6 +49,20 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ParseAnalytics.trackAppOpenedInBackground(getIntent());
+
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
+        else {
+            Log.i(TAG, currentUser.getUsername());
+        }
+
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
