@@ -1,35 +1,30 @@
 package com.example.alex.berich.fragments;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
-import com.example.alex.berich.DayItem;
+import com.example.alex.berich.Day;
+import com.example.alex.berich.ParseMonthItem;
+import com.example.alex.berich.Purchase;
 import com.example.alex.berich.R;
-import com.example.alex.berich.activities.MainActivity;
 import com.example.alex.berich.adapters.DaysAdapter;
+import com.parse.GetCallback;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +54,7 @@ public class MonthFragment extends Fragment {
     private static final String DAY_TITLE = "DAY_TITLE";
 
 
-    List<DayItem> dayItemLis;
+    List<Day> dayItemLis;
     public double totalMoneyCount;
     private RecyclerView mCrimeRecyclerView;
 
@@ -84,7 +79,7 @@ public class MonthFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle onSavedInstanseState) {
         super.onActivityCreated(onSavedInstanseState);
-        DayItem dayItem = new DayItem();
+        Day dayItem = new Day();
 
         //((MainActivity)getActivity()).selectButton(selectButtonFromFragment(getArguments().getInt("Position")));
 
@@ -93,7 +88,7 @@ public class MonthFragment extends Fragment {
         dayItem.monthAndYear = "November 2015";
         dayItem.spent = 100;
 
-        dayItemLis = new ArrayList<DayItem>();
+        dayItemLis = new ArrayList<Day>();
         dayItemLis.add(dayItem);
         dayItemLis.add(dayItem);
         dayItemLis.add(dayItem);
@@ -106,11 +101,11 @@ public class MonthFragment extends Fragment {
         dayItemLis.add(dayItem);
         dayItemLis.add(dayItem);
         dayItemLis.add(dayItem);
-        DayItem.Purchase purchase = new DayItem.Purchase();
+        Purchase purchase = new Purchase();
         purchase.title = "brinza";
         purchase.category = "cumparaturi";
         purchase.price = 100;
-        dayItem.purchasesList = new ArrayList<DayItem.Purchase>();
+        dayItem.purchasesList = new ArrayList<Purchase>();
         dayItem.purchasesList.add(purchase);
         dayItem.purchasesList.add(purchase);
         dayItem.purchasesList.add(purchase);
@@ -171,15 +166,52 @@ public class MonthFragment extends Fragment {
 
             purchases = new JSONArray();
 
-
             purchases.put(purchase1);
             purchases.put(purchase2);
-
+            day1.put("purchases", purchases);
             days.put(day1);
             days.put(day2);
-            day1.put("purchases", purchases);
             month.put("days", days);
+            ParseMonthItem parseMonthItem = new ParseMonthItem(month.toString());
+            parseMonthItem.setObjectId("1/2016");
+            parseMonthItem.setOwner(ParseUser.getCurrentUser());
+            parseMonthItem.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(com.parse.ParseException e) {
+                    if (e == null) {
+                        Log.d(TAG, "succes");
+                        ParseQuery<ParseMonthItem> query = ParseQuery.getQuery(ParseMonthItem.class);
+// Specify the object id
+                        query.getInBackground("1/2016", new GetCallback<ParseMonthItem>() {
+                            @Override
+                            public void done(ParseMonthItem object, com.parse.ParseException e) {
+                                if (e == null) {
+                                    Log.d(TAG, object.toString());
+                                    // Access data using the `get` methods for the object
+//                        String body = item.getBody();
+//                        // Access special values that are built-in to each object
+//                        String objectId = item.getObjectId();
+//                        Date updatedAt = item.getUpdatedAt();
+//                        Date createdAt = item.getCreatedAt();
+                                    // Do whatever you want with the data...
+                                    //Toast.makeText(TodoItemsActivity.this, body, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    // something went wrong
+                                }
+                            }
+                        });
+
+                    } else {
+
+                    }
+
+                }
+            });
+
+
             Log.d(TAG, month.toString());
+
+
 
 
         } catch (JSONException e) {

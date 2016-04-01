@@ -17,13 +17,11 @@ import android.view.View;
 import android.widget.TextView;
 
 
-import com.example.alex.berich.Month;
 import com.example.alex.berich.R;
 
 import com.example.alex.berich.fragments.MonthFragment;
-import com.parse.Parse;
+import com.example.alex.berich.ui.login.LoginActivity;
 import com.parse.ParseAnalytics;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 

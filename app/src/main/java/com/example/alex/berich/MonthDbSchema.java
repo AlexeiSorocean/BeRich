@@ -12,6 +12,7 @@ public class MonthDbSchema {
             public static final String TITLE = "title";
             public static final String OUTFLOW = "outflow";
             public static final String INFLOW = "inflow";
+            public static final String DAYS_NUMBER = "days_number";
             public static final String DAYS = "days";
         }
     }

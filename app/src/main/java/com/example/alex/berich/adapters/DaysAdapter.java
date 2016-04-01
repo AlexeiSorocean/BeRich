@@ -5,15 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.alex.berich.DayItem;
+import com.example.alex.berich.Day;
 import com.example.alex.berich.R;
-import com.example.alex.berich.activities.MainActivity;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,7 +18,7 @@ import java.util.List;
  */
 public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ItemHolder> {
 
-    private List<DayItem> daysItem;
+    private List<Day> daysItem;
     private Context mContext;
 
     @Override
@@ -34,7 +31,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ItemHolder> {
 
     @Override
     public void onBindViewHolder(ItemHolder holder, int position) {
-        DayItem dayItem = daysItem.get(position);
+        Day dayItem = daysItem.get(position);
         holder.dayOfTheMonth .setText(Integer.toString(dayItem.dayOfTheMonth));
         holder.dayOfTheWeek.setText(dayItem.dayOfTheWeek);
         holder.year.setText(dayItem.monthAndYear);
@@ -87,7 +84,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ItemHolder> {
         }
     }
 
-    public DaysAdapter(List<DayItem> dayItemLis, Context context){
+    public DaysAdapter(List<Day> dayItemLis, Context context){
         this.daysItem = dayItemLis;
         this.mContext = context;
     }
