@@ -5,10 +5,12 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
 
+import com.example.alex.berich.injection.ApplicationContext;
 import com.example.alex.berich.injection.component.ApplicationComponent;
 
 
 import com.example.alex.berich.injection.component.DaggerApplicationComponent;
+import com.example.alex.berich.injection.module.ActivityModule;
 import com.example.alex.berich.injection.module.ApplicationModule;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
@@ -39,11 +41,11 @@ public class BeRichApp extends Application {
         return appContext;
     }
 
-    public void setAppContext(Context appContext) {
+    public void setAppContext(@ApplicationContext Context appContext) {
         this.appContext = appContext;
     }
 
-    public static BeRichApp get(Context context) {
+    public static BeRichApp get(@ApplicationContext Context context) {
         return (BeRichApp) context.getApplicationContext();
     }
 

@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.example.alex.berich.injection.ApplicationContext;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -21,6 +23,12 @@ public class ApplicationModule {
     @Provides
     @Singleton
     Context providesApplication() {
+        return appContext;
+    }
+
+    @Provides
+    @ApplicationContext
+    Context provideContext() {
         return appContext;
     }
 }

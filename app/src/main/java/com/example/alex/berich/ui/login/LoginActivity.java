@@ -1,6 +1,5 @@
 package com.example.alex.berich.ui.login;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.alex.berich.BeRichApp;
 import com.example.alex.berich.R;
 import com.example.alex.berich.activities.MainActivity;
-import com.example.alex.berich.activities.SignUpActivity;
+import com.example.alex.berich.ui.singup.SignUpActivity;
 import com.example.alex.berich.injection.component.ActivityComponent;
 import com.example.alex.berich.ui.base.BaseActivity;
 
@@ -37,7 +35,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView{
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_login);
-            //getActivityComponent().inject(this);
+            getActivityComponent().inject(this);
 
             signUpTextView = (TextView)findViewById(R.id.signUpText);
             signUpTextView.setOnClickListener(new View.OnClickListener() {

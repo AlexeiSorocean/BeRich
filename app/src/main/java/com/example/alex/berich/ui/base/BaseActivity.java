@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.alex.berich.BeRichApp;
 import com.example.alex.berich.injection.component.ActivityComponent;
 
+
 import com.example.alex.berich.injection.component.DaggerActivityComponent;
 import com.example.alex.berich.injection.module.ActivityModule;
 
@@ -21,7 +22,6 @@ public class BaseActivity extends AppCompatActivity {
         if (activityComponent == null) {
             activityComponent = DaggerActivityComponent.builder()
                     .activityModule(new ActivityModule(this))
-                    .applicationComponent(BeRichApp.get(this).getComponent())
                     .build();
         }
         return activityComponent;

@@ -1,41 +1,41 @@
-package com.example.alex.berich.activities;
+package com.example.alex.berich.ui.singup;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.alex.berich.R;
+import com.example.alex.berich.activities.MainActivity;
+import com.example.alex.berich.ui.base.BaseActivity;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class SignUpActivity extends Activity {
+public class SignUpActivity extends BaseActivity {
 
-    protected EditText mUsername;
-    protected EditText mPassword;
-    protected EditText mEmail;
-    protected Button mSignUpButton;
+    protected EditText username;
+    protected EditText password;
+    protected EditText email;
+    protected Button signUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        mUsername = (EditText)findViewById(R.id.usernameField);
-        mPassword = (EditText)findViewById(R.id.passwordField);
-        mEmail = (EditText)findViewById(R.id.emailField);
-        mSignUpButton = (Button)findViewById(R.id.signupButton);
-        mSignUpButton.setOnClickListener(new View.OnClickListener() {
+        username = (EditText)findViewById(R.id.usernameField);
+        password = (EditText)findViewById(R.id.passwordField);
+        email = (EditText)findViewById(R.id.emailField);
+        signUpButton = (Button)findViewById(R.id.signupButton);
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = mUsername.getText().toString();
-                String password = mPassword.getText().toString();
-                String email = mEmail.getText().toString();
+                String username = SignUpActivity.this.username.getText().toString();
+                String password = SignUpActivity.this.password.getText().toString();
+                String email = SignUpActivity.this.email.getText().toString();
 
                 username = username.trim();
                 password = password.trim();

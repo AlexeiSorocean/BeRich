@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.example.alex.berich.injection.ActivityContext;
+import com.example.alex.berich.ui.login.LoginPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -22,9 +23,9 @@ public class ActivityModule {
         return mActivity;
     }
 
+
     @Provides
-    @ActivityContext
-    Context providesContext() {
-        return mActivity;
+    LoginPresenter provideLoginPresenter() {
+        return new LoginPresenter();
     }
 }
