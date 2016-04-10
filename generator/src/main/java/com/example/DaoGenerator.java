@@ -5,7 +5,7 @@ import de.greenrobot.daogenerator.Schema;
 
 public class DaoGenerator {
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(1, "com.example.alex.berich.model.db");
+        Schema schema = new Schema(1, "com.example.alex.berich.data.model");
 
         addUsers(schema);
         addOrders(schema);
