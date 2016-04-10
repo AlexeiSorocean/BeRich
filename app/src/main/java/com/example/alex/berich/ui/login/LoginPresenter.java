@@ -46,7 +46,7 @@ public static class MvpViewNotAttachedException extends RuntimeException {
     }
 }
 
-    public void checkUserImput(String username, String password) {
+    public void login(String username, String password) {
         username = username.trim();
         password = password.trim();
 

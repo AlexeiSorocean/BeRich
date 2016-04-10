@@ -40,6 +40,7 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.parse.bolts:bolts-android:1.4.0'
     compile 'com.parse:parse-android:1.+'
+    compile 'de.greenrobot:greendao:2.1.0'
 
     apt 'com.google.dagger:dagger-compiler:2.1'
     compile 'com.google.dagger:dagger:2.1'

@@ -2,7 +2,6 @@ package com.example.alex.berich;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 
 
 import com.example.alex.berich.injection.ApplicationContext;
@@ -10,8 +9,8 @@ import com.example.alex.berich.injection.component.ApplicationComponent;
 
 
 import com.example.alex.berich.injection.component.DaggerApplicationComponent;
-import com.example.alex.berich.injection.module.ActivityModule;
 import com.example.alex.berich.injection.module.ApplicationModule;
+
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
@@ -31,7 +30,7 @@ public class BeRichApp extends Application {
     @Override
     public void onCreate() {
         Parse.initialize(this, "YYESkJacgOqhnzTqcCS0G3JbEPo6jGnlHsL1wDaH", "Yx1ussY2sW3JnRR1OmR9NpBEzklTnAxIy1tL0jw1");
-        ParseObject.registerSubclass(ParseMonthItem.class);
+        //ParseObject.registerSubclass(ParseMonthItem.class);
         ParseInstallation.getCurrentInstallation().saveInBackground();
         super.onCreate();
         appContext = getApplicationContext();

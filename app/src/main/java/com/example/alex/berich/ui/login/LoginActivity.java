@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.alex.berich.R;
-import com.example.alex.berich.activities.MainActivity;
+import com.example.alex.berich.ui.main.MainActivity;
 import com.example.alex.berich.ui.singup.SignUpActivity;
 import com.example.alex.berich.injection.component.ActivityComponent;
 import com.example.alex.berich.ui.base.BaseActivity;
@@ -36,7 +36,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_login);
             getActivityComponent().inject(this);
-
+            loginPresenter.attachView(this);
             signUpTextView = (TextView)findViewById(R.id.signUpText);
             signUpTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -52,7 +52,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView{
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    loginPresenter.checkUserImput(username.getText().toString(), password.getText().toString());
+                    loginPresenter.login(username.getText().toString(), password.getText().toString());
                 }
             });
         }

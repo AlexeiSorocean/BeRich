@@ -1,37 +1,37 @@
-package com.example.alex.berich.activities;
+package com.example.alex.berich.ui.main;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.alex.berich.R;
 
-import com.example.alex.berich.fragments.MonthFragment;
+import com.example.alex.berich.ui.base.BaseActivity;
 import com.example.alex.berich.ui.login.LoginActivity;
 import com.parse.ParseAnalytics;
-import com.parse.ParseUser;
+
+import javax.inject.Inject;
 
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements MainMvpView, View.OnClickListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final int NUM_PAGES = 3;
 
-    private ViewPager mPager;
+    private ViewPager viewPager;
 
     private PagerAdapter mPagerAdapter;
 
@@ -41,45 +41,72 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private TextView nextMonth;
     private TextView prevMonth;
 
+    @Inject
+    MainPresenter mainPresenter;
+
     boolean onButtonClick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getActivityComponent().inject(this);
+        mainPresenter.attachView(this);
+
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
-
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser == null) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        }
-        else {
-            Log.i(TAG, currentUser.getUsername());
-        }
-
-
-        mPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-        mPager.setCurrentItem(1, false);
-        //mPager.setOnPageChangeListener(new CircularViewPagerHandler(mPager));
+        viewPager.setAdapter(mPagerAdapter);
+        viewPager.setCurrentItem(1, false);
 
         currentMonth = (TextView) findViewById(R.id.currentMonth);
         nextMonth = (TextView) findViewById(R.id.nextMonth);
         prevMonth = (TextView) findViewById(R.id.prevMonth);
+
         currentMonth.setOnClickListener(this);
         nextMonth.setOnClickListener(this);
         prevMonth.setOnClickListener(this);
+
+
+        mainPresenter.onLoginRequired();
 
         currentMonth.setText("01/2016");
         prevMonth.setText("12/2015");
         nextMonth.setText("02/2016");
         selectButton(R.id.currentMonth);
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            // This method will be invoked when a new page becomes selected.
+            @Override
+            public void onPageSelected(int position) {
+                Toast.makeText(MainActivity.this,
+                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
+                selectButton(position);
+            }
+
+            // This method will be invoked when the current page is scrolled
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                // Code goes here
+            }
+
+            // Called when the scroll state changes:
+            // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                // Code goes here
+            }
+        });
+
+    }
+
+    public void showLoginScreen() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     @Override
@@ -102,19 +129,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public void selectButton(int id) {
         switch (id) {
-            case R.id.nextMonth: {
+            case 2: {
                 nextMonth.setTextColor(Color.BLACK);
                 prevMonth.setTextColor(Color.GRAY);
                 currentMonth.setTextColor(Color.GRAY);
             }
             break;
-            case R.id.prevMonth: {
+            case 0: {
                 prevMonth.setTextColor(Color.BLACK);
                 nextMonth.setTextColor(Color.GRAY);
                 currentMonth.setTextColor(Color.GRAY);
             }
             break;
-            case R.id.currentMonth: {
+            case 1: {
                 currentMonth.setTextColor(Color.BLACK);
                 nextMonth.setTextColor(Color.GRAY);
                 prevMonth.setTextColor(Color.GRAY);
@@ -128,15 +155,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         switch (id) {
 
             case R.id.prevMonth: {
-                mPager.setCurrentItem(0);
+                viewPager.setCurrentItem(0);
             }
             break;
             case R.id.currentMonth: {
-                mPager.setCurrentItem(1);
+                viewPager.setCurrentItem(1);
             }
             break;
             case R.id.nextMonth: {
-                mPager.setCurrentItem(2);
+                viewPager.setCurrentItem(2);
             }
             break;
         }
@@ -149,6 +176,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         @Override
         public Fragment getItem(int position) {
+
             return  MonthFragment.getInstance(position);
         }
 
@@ -156,5 +184,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         public int getCount() {
             return NUM_PAGES;
         }
+
+
     }
 }
